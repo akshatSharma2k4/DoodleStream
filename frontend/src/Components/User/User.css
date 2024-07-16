@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.user {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 4px;
+    min-height: 25px;
+    height: auto;
+}
+.user:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+.user:nth-child(even) {
+    background-color: #e0e0e0;
+}
+
+.user.correct-guessed:nth-child(odd) {
+    background-color: rgb(72, 199, 55);
+}
+.user.correct-guessed:nth-child(even) {
+    background-color: rgb(96, 219, 79);
+}

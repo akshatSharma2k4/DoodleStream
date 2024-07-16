@@ -1,0 +1,53 @@
+.create-game-container {
+    padding: 10px;
+    color: white;
+    font-size: larger;
+    width: 650px;
+    height: 550px;
+    background-color: rgb(60, 58, 58);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.disabled:hover {
+    cursor: no-drop !important;
+}
+.container-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    width: 100%;
+}
+.selector {
+    width: 40%;
+    height: 100%;
+}
+.custom-words-contaienr {
+    margin-top: 30px;
+    width: 100%;
+    height: 40%;
+}
+.custom-words-input {
+    resize: none;
+    padding: 10px;
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+.room-join-btn {
+    border-radius: 4px;
+    width: 100%;
+    height: 50px;
+    font-size: x-large;
+    color: white;
+    background-color: #56ed38;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+.room-join-btn:hover {
+    background-color: #2f971f;
+    cursor: pointer;
+}

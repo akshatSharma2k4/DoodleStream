@@ -1,0 +1,19 @@
+r* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.user-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+    height: 500px;
+    border-radius: 4px;
+    background-color: white;
+}
+.user-section {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}

@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.chat {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1px;
+    min-height: 25px;
+    height: auto;
+}
+.chat-message:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+.chat-message:nth-child(even) {
+    background-color: #e0e0e0;
+}
+
+/* .white {
+    background-color: white;
+}
+.gray {
+    background-color: rgb(224, 217, 217);
+} */
+
+.chat-message.left {
+    background-color: #ffcccc;
+}
+.chat-message.correct-ans {
+    background-color: #ccffcc;
+}
+
+.chat-message.joined {
+    background-color: rgb(219, 161, 52);
+}
+/* .left {
+    color: red;
+    font-weight: bold;
+}
+.correct-ans {
+    color: rgb(28, 224, 28);
+    font-weight: bold;
+} */

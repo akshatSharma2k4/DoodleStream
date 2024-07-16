@@ -1,0 +1,19 @@
+.word-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-width: 100px;
+    width: fit-content;
+    height: 50px;
+    padding: 5px;
+    border-radius: 6px;
+    border: 3px solid white;
+    font-weight: bold;
+}
+.word-item:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border: none;
+}
