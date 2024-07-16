@@ -61,28 +61,14 @@ const Hompepage = () => {
                 room: roomId,
             });
             dispatch(addName(uname));
-            dispatch(
-                setRoomOwner({
-                    name: uname,
-                    id: socketService.id,
-                    points: 0,
-                    guessedCorrectAns: false,
-                })
-            );
+            dispatch(setRoomOwner(socketService.socket.id));
         } else {
             socketService.emit("create-room", {
                 name: username,
                 room: roomId,
             });
             dispatch(addName(username));
-            dispatch(
-                setRoomOwner({
-                    name: username,
-                    id: socketService.id,
-                    points: 0,
-                    guessedCorrectAns: false,
-                })
-            );
+            dispatch(setRoomOwner(socketService.socket.id));
         }
 
         dispatch(addRoom(roomId));

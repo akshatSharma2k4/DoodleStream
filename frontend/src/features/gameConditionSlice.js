@@ -11,6 +11,7 @@ const initialState = {
     roomOwner: null,
     isGameStarted: false,
     showWaitingScreen: false,
+    showResults: false,
 };
 
 export const gameConditionSlice = createSlice({
@@ -47,6 +48,9 @@ export const gameConditionSlice = createSlice({
         setShowWaitingScreen: (state, action) => {
             state.showWaitingScreen = action.payload;
         },
+        setShowResults: (state, action) => {
+            state.showResults = action.payload;
+        },
         resetGameConditions: (state, action) => {
             return {
                 totalRounds: null,
@@ -73,6 +77,7 @@ export const {
     resetGameConditions,
     setIsGameStarted,
     setShowWaitingScreen,
+    setShowResults,
 } = gameConditionSlice.actions;
 
 export default gameConditionSlice.reducer;

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CreateGame from "./CreateGame";
 import Gameplay from "./Gameplay/Gameplay";
 import Header from "./Header/Header";
+import Results from "./Results/Results";
 import {
     resetGameConditions,
     setCurrentRound,
@@ -20,15 +21,19 @@ import {
     setRoomOwner,
     setIsGameStarted,
     setShowWaitingScreen,
+    setShowResults,
 } from "../features/gameConditionSlice";
 
 const ScreenLayout = () => {
+    const [resultData, setResultData] = useState([]);
     const dispatch = useDispatch();
     const socketConn = useContext(SocketContext);
     const myId = useSelector((state) => state.user.id);
     const currentlyDrawing = useSelector(
         (state) => state.gameCondition.currentlyDrawing
     );
+    const roomOwner = useSelector((state) => state.gameCondition.roomOwner);
+    const showResults = useSelector((state) => state.gameCondition.showResults);
     const isGameStarted = useSelector(
         (state) => state.gameCondition.isGameStarted
     );
@@ -44,27 +49,33 @@ const ScreenLayout = () => {
             dispatch(setRoomOwner(data.roomOwner));
             dispatch(setIsGameStarted(data.isGameStarted));
             dispatch(setShowWaitingScreen(data.showWaitingScreen));
+            dispatch(setShowResults(data.showingResults));
+        });
+        socketConn.on("game-over", (data) => {
+            dispatch(setShowResults(true));
+            setResultData(data);
         });
     }, []);
     useEffect(() => {
-        console.log("Currently drawing called", currentlyDrawing, myId);
-        if (!currentlyDrawing || currentlyDrawing.id != myId) {
+        if (!roomOwner || roomOwner != myId) {
             setAllowChange(false);
         } else {
             setAllowChange(true);
         }
-    }, [currentlyDrawing]);
+    }, [roomOwner]);
 
     return (
         <Stack className="background" gap={1}>
             <Header></Header>
             <Stack direction={"row"}>
                 <ConnectedUsers></ConnectedUsers>
-                {isGameStarted ? (
-                    <Gameplay></Gameplay>
-                ) : (
-                    <CreateGame allowChange={allowChange}></CreateGame>
-                )}
+                {showResults && <Results users={resultData}></Results>}
+                {!showResults &&
+                    (isGameStarted ? (
+                        <Gameplay></Gameplay>
+                    ) : (
+                        <CreateGame allowChange={allowChange}></CreateGame>
+                    ))}
                 <Chatbox></Chatbox>
             </Stack>
         </Stack>

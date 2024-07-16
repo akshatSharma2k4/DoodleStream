@@ -1,0 +1,30 @@
+.screen {
+    width: 650px;
+    background-color: rgb(87, 84, 84);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.result-header {
+    font-weight: bold;
+    font-size: xx-large;
+    font-family: sans-serif;
+    color: rgb(255, 60, 60);
+}
+.individual-result {
+    margin-top: 20px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    gap: 8px;
+    width: 60%;
+    color: white;
+    font-size: larger;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.r-span{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
