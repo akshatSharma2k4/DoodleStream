@@ -1,0 +1,44 @@
+.color-pallete {
+    display: flex;
+    gap: 8px;
+}
+.color-selection-box {
+    display: grid;
+    border-radius: 4px;
+    width: 380px;
+    height: 45px;
+    grid-template-columns: repeat(13, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+.selected-color-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+.brush-selection-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 4px;
+    background-color: rgb(74, 164, 74);
+}
+.delete-drawing-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 4px;
+    background-color: white;
+}
+/* .delete-drawing-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 4px;
+} */
+.grid-item-top:hover {
+    border: 2px solid rgb(37, 35, 35, 0.8);
+}
+.grid-item-bottom:hover {
+    border: 2px solid rgb(242, 236, 236, 0.9);
+}
