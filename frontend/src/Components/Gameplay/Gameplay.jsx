@@ -12,14 +12,17 @@ const Gameplay = () => {
     const currentlyDrawing = useSelector(
         (state) => state.gameCondition.currentlyDrawing
     );
-    const [waiting, setWaiting] = useState(true);
+    const waiting = useSelector(
+        (state) => state.gameCondition.showWaitingScreen
+    );
     const [waitingCategory, setWaitingCategory] = useState("");
-
     useEffect(() => {
-        if (!currentlyDrawing || currentlyDrawing.id != myId) {
-            setWaitingCategory("drawer-choosing-word");
-        } else {
-            setWaitingCategory("choosing-word");
+        if (waiting) {
+            if (!currentlyDrawing || currentlyDrawing.id != myId) {
+                setWaitingCategory("drawer-choosing-word");
+            } else {
+                setWaitingCategory("choosing-word");
+            }
         }
     }, [currentlyDrawing]);
     return (

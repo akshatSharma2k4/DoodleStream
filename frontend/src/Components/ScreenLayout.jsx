@@ -8,6 +8,7 @@ import SocketContext from "../context/SocketContext";
 import { useDispatch, useSelector } from "react-redux";
 import CreateGame from "./CreateGame";
 import Gameplay from "./Gameplay/Gameplay";
+import Header from "./Header/Header";
 import {
     resetGameConditions,
     setCurrentRound,
@@ -18,6 +19,7 @@ import {
     setWordChosen,
     setRoomOwner,
     setIsGameStarted,
+    setShowWaitingScreen,
 } from "../features/gameConditionSlice";
 
 const ScreenLayout = () => {
@@ -41,6 +43,7 @@ const ScreenLayout = () => {
             dispatch(setCurrentWordLength(data.currentWordLength));
             dispatch(setRoomOwner(data.roomOwner));
             dispatch(setIsGameStarted(data.isGameStarted));
+            dispatch(setShowWaitingScreen(data.showWaitingScreen));
         });
     }, []);
     useEffect(() => {
@@ -53,7 +56,8 @@ const ScreenLayout = () => {
     }, [currentlyDrawing]);
 
     return (
-        <Stack className="background">
+        <Stack className="background" gap={1}>
+            <Header></Header>
             <Stack direction={"row"}>
                 <ConnectedUsers></ConnectedUsers>
                 {isGameStarted ? (
