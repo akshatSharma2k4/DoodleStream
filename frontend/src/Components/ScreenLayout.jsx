@@ -1,3 +1,4 @@
+import "./style.css";
 import { Stack } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -10,6 +11,8 @@ import CreateGame from "./CreateGame";
 import Gameplay from "./Gameplay/Gameplay";
 import Header from "./Header/Header";
 import Results from "./Results/Results";
+import VideoCall from "./VideoCall";
+
 import {
     resetGameConditions,
     setCurrentRound,
@@ -25,10 +28,14 @@ import {
 } from "../features/gameConditionSlice";
 
 const ScreenLayout = () => {
+    // video call data
+
+    // game content
     const [resultData, setResultData] = useState([]);
     const dispatch = useDispatch();
     const socketConn = useContext(SocketContext);
     const myId = useSelector((state) => state.user.id);
+    const room = useSelector((state) => state.user.room);
     const currentlyDrawing = useSelector(
         (state) => state.gameCondition.currentlyDrawing
     );
@@ -77,6 +84,13 @@ const ScreenLayout = () => {
                         <CreateGame allowChange={allowChange}></CreateGame>
                     ))}
                 <Chatbox></Chatbox>
+                <Stack id="video-call-users" style={{ width: "400px" }}>
+                    <VideoCall
+                        appId={"0f81aa4f413b4daa829eaa46323cfea4"}
+                        channel={room}
+                        token={""}
+                    ></VideoCall>
+                </Stack>
             </Stack>
         </Stack>
     );

@@ -4,6 +4,7 @@ import Hompepage from "../Components/Hompepage";
 import CreateGame from "../Components/CreateGame";
 import ScreenLayout from "../Components/ScreenLayout";
 import Gameplay from "../Components/Gameplay/Gameplay";
+import VideoCall from "../Components/VideoCall";
 // import GameplayPage from "../Components/Gameplay";
 // import GameLayout from "../Components/GameLayout";
 
@@ -24,15 +25,16 @@ const router = createBrowserRouter([
                         path: "/create-game",
                         element: <CreateGame></CreateGame>,
                     },
-                    // {
-                    //     path: "/create-game/play-game",
-                    //     element: <Gameplay></Gameplay>,
-                    // },
+
                     {
                         path: "*",
                         element: <div>404</div>,
                     },
                 ],
+            },
+            {
+                path: "/vc",
+                element: <VideoCall></VideoCall>,
             },
             {
                 path: "*",
