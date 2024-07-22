@@ -36,29 +36,22 @@ export const Basics = ({ appId, channel, token }) => {
     return (
         <>
             <Stack className="room">
-                <Stack
-                    className="user-list"
-                    // style={{
-                    //     width: "100%",
-                    //     height: "600px",
-                    //     // overflowY: "scroll",
-                    // }}
-                >
+                <Stack className="user-list">
                     <Stack
-                        width={"300px"}
-                        height={"250px"}
+                        height={"180px"}
                         sx={{
                             borderRadius: "8px",
                             boxShadow:
                                 "0 4px 8px rgba(0, 0, 0, 0.1)" /* Add shadow for card effect */,
                             backgroundColor: "#fff",
                             padding: "8px",
+                            width: "100%",
                         }}
                     >
                         <LocalUser
                             style={{
-                                height: "200px",
-                                minHeight: "200px",
+                                height: "100%",
+                                minHeight: "100%",
                             }}
                             audioTrack={localMicrophoneTrack}
                             cameraOn={cameraOn}
@@ -71,22 +64,22 @@ export const Basics = ({ appId, channel, token }) => {
                     </Stack>
                     {remoteUsers.map((user) => (
                         <Stack
-                            width={"300px"}
-                            height={"250px"}
                             sx={{
                                 borderRadius: "8px",
                                 boxShadow:
                                     "0 4px 8px rgba(0, 0, 0, 0.1)" /* Add shadow for card effect */,
                                 backgroundColor: "#fff",
                                 padding: "8px",
+                                width: "100%",
+                                height: "180px",
                             }}
                             // className="user"
                             key={user.uid}
                         >
                             <RemoteUser
                                 style={{
-                                    height: "200px",
-                                    minHeight: "200px",
+                                    height: "100%",
+                                    minHeight: "100%",
                                 }}
                                 cover="https://www.agora.io/en/wp-content/uploads/2022/10/3d-spatial-audio-icon.svg"
                                 user={user}

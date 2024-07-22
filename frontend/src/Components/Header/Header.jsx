@@ -2,6 +2,7 @@ import "./Header.css";
 import { useSelector } from "react-redux";
 import SocketContext from "../../context/SocketContext";
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { Stack } from "@mui/material";
 
 const Header = ({ children }) => {
     const currentWordLength = useSelector(
@@ -49,16 +50,19 @@ const Header = ({ children }) => {
     }, [socketConnection, totalDrawTime, timerRef.current]);
     return (
         <div className="header">
-            <div ref={timerRef} className="timer">
-                0
-            </div>
-            <span className="display-round">
-                Round {gameCondition.currentRound} of{" "}
-                {gameCondition.totalRounds}
-            </span>{" "}
+            <Stack direction={"row"} alignItems={"center"} gap={2}>
+                <div ref={timerRef} className="timer">
+                    0
+                </div>
+                <span className="display-round">
+                    <span className="responsive-round-text">{"Round "} </span>
+                    {gameCondition.currentRound} of {gameCondition.totalRounds}
+                </span>{" "}
+            </Stack>
+
             {children}
             <div className="guess-box">
-                GUESS THIS
+                <span className="responsive-guess-text">GUESS THIS</span>
                 <div className="word-length-guess">
                     {Array.from({ length: currentWordLength }).map(
                         (_, index) => (
@@ -69,9 +73,8 @@ const Header = ({ children }) => {
                 </div>
             </div>
             <div>
-                <button>Voice Off</button>
-                <button>Video Off</button>
-                <button>Settings</button>
+                <button>V</button>
+                <button>V</button>
             </div>
         </div>
     );

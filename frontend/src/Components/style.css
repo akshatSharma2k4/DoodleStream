@@ -4,13 +4,15 @@ body {
 
 .room {
     width: 100%;
-    height: 100%;
+    max-width: 250px;
+    border: 2px solid red;
 }
 
 .user-list {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    width: 100%;
     height: 600px; /* Adjust height to fit the layout */
     overflow-y: auto; /* Add scroll when content exceeds height */
     flex-grow: 0; /* Allow container to grow within parent */

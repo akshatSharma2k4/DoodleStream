@@ -72,9 +72,14 @@ const ScreenLayout = () => {
     }, [roomOwner]);
 
     return (
-        <Stack className="background" gap={1}>
+        <Stack className="background" gap={1} alignItems={"center"}>
             <Header></Header>
-            <Stack direction={"row"}>
+            <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                sx={{ border: "2px solid red", width: "95%" }}
+                gap={0.5}
+            >
                 <ConnectedUsers></ConnectedUsers>
                 {showResults && <Results users={resultData}></Results>}
                 {!showResults &&
@@ -84,7 +89,13 @@ const ScreenLayout = () => {
                         <CreateGame allowChange={allowChange}></CreateGame>
                     ))}
                 <Chatbox></Chatbox>
-                <Stack id="video-call-users" style={{ width: "400px" }}>
+                <Stack
+                    id="video-call-users"
+                    sx={{
+                        maxWidth: "250px",
+                        width: "50%",
+                    }}
+                >
                     <VideoCall
                         appId={"0f81aa4f413b4daa829eaa46323cfea4"}
                         channel={room}

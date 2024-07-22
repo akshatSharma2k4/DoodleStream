@@ -7,9 +7,9 @@
     border-radius: 8px;
     align-items: center;
     padding: 5px;
-    padding-left: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
     background-color: white;
-
 }
 .word-length-guess {
     font-weight: bold;
@@ -24,6 +24,7 @@
 }
 
 .display-round {
+    display: flex;
     font-weight: bold;
     font-size: larger;
 }
@@ -38,4 +39,18 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
+}
+
+.responsive-round-text {
+    display: block; /* or any other display property you need */
+}
+
+/* Hide the element on small screens */
+@media (max-width: 600px) {
+    .responsive-round-text {
+        display: none;
+    }
+}
+.responsive-guess-text {
+    font-size: clamp(12px, 1.5vw, 24px);
 }
