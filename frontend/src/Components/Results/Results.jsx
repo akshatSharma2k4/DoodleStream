@@ -2,8 +2,7 @@ import { useSelector } from "react-redux";
 import SocketContext from "../../context/SocketContext";
 import "./Results.css";
 import React, { useContext, useEffect, useState } from "react";
-const Results = ({users}) => {
-    
+const Results = ({ users }) => {
     return (
         <div className="screen">
             <span className="result-header">Results</span>

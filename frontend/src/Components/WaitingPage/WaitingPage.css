@@ -1,19 +1,78 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: "Arial", sans-serif;
+    background-color: #121212; /* Dark background for better contrast */
+}
+
+/* WaitingPage Container */
+.waiting-page {
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #121212; /* Background color to match body */
+}
+
+/* Choosing Word Section */
+.choosing-word-container {
+    width: 650px;
+    height: 450px;
+    background-color: #333333; /* Slightly lighter than the page background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Adds depth */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Word Item Styles */
 .word-item {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    min-width: 100px;
-    width: fit-content;
-    height: 50px;
-    padding: 5px;
-    border-radius: 6px;
-    border: 3px solid white;
+    min-width: 120px; /* Slightly larger for better click area */
+    width: auto;
+    height: 60px; /* Increased height for better readability */
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #ffffff; /* Slightly softer border */
     font-weight: bold;
+    font-size: 1.2rem; /* Larger text for better visibility */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
+
+/* Hover Effect */
 .word-item:hover {
-    background-color: white;
-    color: black;
+    background-color: #ffffff; /* Light background on hover */
+    color: #000000; /* Dark text color for better contrast */
     cursor: pointer;
-    border: none;
+    border-color: #ffffff; /* Matches background color */
+}
+
+/* Typography for "Choosing a Word" Message */
+.typography {
+    font-size: 1.5rem; /* Larger font size for better readability */
+    color: #ffffff; /* White text color for contrast */
+    text-align: center; /* Center align text */
+    margin-bottom: 20px; /* Spacing between elements */
+    padding: 10px;
+    background-color: #2a2a2a; /* Match the background color of ChoosingWord container */
+    border-radius: 8px; /* Rounded corners for message */
+}
+/* Background color for OtherChoosingWord */
+.other-choosing-word {
+    width: 650px;
+    height: 500px; /* Adjusted height to fit the message */
+    background-color: #333333; /* Slightly lighter than the ChoosingWord container */
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff; /* White text color for contrast */
 }

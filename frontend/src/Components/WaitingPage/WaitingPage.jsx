@@ -8,7 +8,13 @@ const OtherChoosingWord = () => {
     const currentlyDrawing = useSelector(
         (state) => state.gameCondition.currentlyDrawing
     );
-    return <Typography>{currentlyDrawing.name} is Choosing a Word!</Typography>;
+    return (
+        <Stack className="other-choosing-word">
+            <Typography sx={{ fontSize: "x-large" }}>
+                {currentlyDrawing.name} is Choosing a Word!
+            </Typography>
+        </Stack>
+    );
 };
 
 // ========================================================================================
@@ -38,12 +44,12 @@ const ChoosingWord = () => {
             alignItems={"center"}
             justifyContent={"center"}
             gap={2}
+            className="choosing-word-container"
             sx={{
                 width: "650px",
-                height: "450px",
+                height: "500px",
                 color: "white",
                 fontSize: "x-large",
-                backgroundColor: "rgb(72,72,72)",
             }}
         >
             {words.map((word, id) => {
@@ -67,7 +73,7 @@ const WaitingPage = ({ category }) => {
         <Stack
             sx={{ width: "100%", height: "100%" }}
             alignItems={"center"}
-            justifyContent={"center"}
+            // justifyContent={"center"}
         >
             {(() => {
                 switch (category) {

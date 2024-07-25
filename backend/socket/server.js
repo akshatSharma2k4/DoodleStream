@@ -263,6 +263,11 @@ io.on("connection", (socket) => {
 
             // Timer
             const timer = setTimeout(() => {
+                if (!roomConditions[room]) {
+                    console.log("Room conditions are undefined");
+                    return;
+                }
+
                 let roundChanged = false;
                 io.to(room).emit("recieve-message", {
                     // iss part main problem hai
@@ -494,7 +499,28 @@ io.on("connection", (socket) => {
                     delete roomMembers[room];
                     delete roomConditions[room];
                 } else {
-                    console.log("calling these");
+                    if (socket.id === roomConditions[room].roomOwner) {
+                        // Assign new owner
+                        roomConditions[room].roomOwner =
+                            roomMembers[room][0].id;
+                    }
+
+                    // If the removed member was the currently drawing user
+                    if (
+                        socket.id ===
+                        roomMembers[room][
+                            roomConditions[room]?.currentlyDrawing - 1
+                        ]?.id
+                    ) {
+                        // Update currently drawing user
+                        const nextDrawingIndex =
+                            roomConditions[room].currentlyDrawing %
+                            roomMembers[room].length;
+                        roomConditions[room].currentlyDrawing =
+                            nextDrawingIndex + 1;
+                    }
+
+                    // Notify all users in the room
                     io.to(room).emit(
                         "recieve-connected-users",
                         roomMembers[room]
@@ -504,10 +530,27 @@ io.on("connection", (socket) => {
                         message: `${removedMemberName} left the room`,
                         category: "left",
                     });
-                    // roomConditions[room].roomOwner = roomMembers[room][0].id;
-                    // io.to(room).emit("update-game-conditions",{
 
-                    // });
+                    // Update game conditions for all users
+                    const whoIsDrawing =
+                        roomMembers[room][
+                            roomConditions[room]?.currentlyDrawing - 1
+                        ];
+                    io.to(room).emit("update-game-conditions", {
+                        wordChosen: roomConditions[room]?.wordChosen,
+                        currentlyDrawing: whoIsDrawing,
+                        totalRounds: roomConditions[room]?.rounds,
+                        totalDrawTime: roomConditions[room]?.drawTime,
+                        currentRound: roomConditions[room]?.currentRound,
+                        currentWordLength:
+                            roomConditions[room]?.correctAns?.length || 0,
+                        roomOwner: roomConditions[room].roomOwner,
+                        isGameStarted: roomConditions[room]?.isGameStarted,
+                        showWaitingScreen:
+                            roomConditions[room]?.showWaitingScreen,
+                        showingResults: roomConditions[room]?.showingResults,
+                    });
+
                 }
             }
         }

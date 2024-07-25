@@ -1,30 +1,53 @@
+/* Screen Container */
 .screen {
     width: 650px;
-    background-color: rgb(87, 84, 84);
+    background-color: #1e1e1e; 
+    border-radius: 12px; 
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6); 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
+/* Results Header */
 .result-header {
     font-weight: bold;
-    font-size: xx-large;
-    font-family: sans-serif;
-    color: rgb(255, 60, 60);
+    font-size: 2rem; 
+    font-family: "Arial", sans-serif; /* More modern font family */
+    color: #ff3d3d; /* Bright red color for attention */
+    margin-bottom: 20px; /* Spacing below header */
+    text-align: center; /* Center align header text */
 }
+
+/* Individual Result */
 .individual-result {
-    margin-top: 20px;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-top: 10px; /* Reduced margin for spacing between results */
+    font-family: "Verdana", sans-serif; /* Cleaner font */
     gap: 8px;
-    width: 60%;
-    color: white;
-    font-size: larger;
+    width: 100%; /* Full width for results */
+    color: #ffffff; /* White text color for contrast */
+    font-size: 1.1rem; /* Slightly larger text size */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center; /* Center align items */
+    justify-content: center;
 }
-.r-span{
+
+/* Result Span */
+.r-span {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    padding: 10px; /* Padding for better spacing */
+    border-bottom: 1px solid #333333; /* Divider line between results */
+    background-color: #2a2a2a; /* Slightly lighter background for each result item */
+    border-radius: 8px; /* Rounded corners for each result item */
+    margin-bottom: 10px; /* Space between items */
+}
+
+/* Last Result Item */
+.individual-result:last-child .r-span {
+    border-bottom: none; /* Remove bottom border for the last item */
 }

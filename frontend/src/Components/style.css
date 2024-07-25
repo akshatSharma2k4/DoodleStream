@@ -17,6 +17,7 @@ body {
     overflow-y: auto; /* Add scroll when content exceeds height */
     flex-grow: 0; /* Allow container to grow within parent */
     flex-shrink: 0;
+    position: relative; /* Added to ensure child positioning works */
 }
 
 .user-name {
@@ -34,31 +35,38 @@ body {
     left: 10px;
 }
 
-.control {
-    color: rgba(209, 213, 219, 1);
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    background-color: rgba(33, 36, 44, 1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.control,
+.local-controls,
+.controls {
+    display: none;
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    box-sizing: border-box;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6); /* Slightly transparent background */
+    border-radius: 4px;
+    padding: 5px;
+    z-index: 10; /* Ensure it is above other elements */
 }
 
-.left-control {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    display: flex;
-    align-items: center;
-    flex: 1 1 0%;
-    height: 100%;
+.control button,
+.local-controls button,
+.controls button {
+    color: #fff;
+    background: transparent;
+    border: none;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.control button:hover,
+.local-controls button:hover,
+.controls button:hover {
+    background: rgba(255, 255, 255, 0.3); /* Slight hover effect */
+}
+
+.remote-user-container:hover .controls,
+.local-user-container:hover .local-controls {
+    display: block;
 }
 
 .i-microphone {
