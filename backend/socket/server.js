@@ -23,6 +23,57 @@ const calculatePointsForDraw = () => {
     return 1;
 };
 
+const roundUpdation = (room, currentRoundValue) => {
+    if (currentRoundValue == roomConditions[room]?.rounds) {
+        console.log("game over");
+
+        io.to(room).emit("game-over", roomMembers[room]);
+        roomConditions[room].showingResults = true;
+        setTimeout(() => {
+            console.log("Timeout has been called");
+            roomConditions[room].showingResults = false;
+            roomConditions[room] = {
+                wordChosen: false,
+                players: null,
+                rounds: null,
+                currentRound: null,
+                words: null,
+                drawTime: null,
+                hints: [],
+                currentlyDrawing: 1,
+                correctAns: null,
+                roomOwner: roomConditions[room].roomOwner,
+                isGameStarted: false,
+                timerStartTime: null,
+                showWaitingScreen: false,
+                showingResults: roomConditions[room].showingResults,
+            };
+            const whoIsDrawing =
+                roomMembers[room][roomConditions[room]?.currentlyDrawing - 1];
+            io.to(room).emit("update-game-conditions", {
+                wordChosen: roomConditions[room]?.wordChosen,
+                currentlyDrawing: whoIsDrawing,
+                totalRounds: roomConditions[room]?.rounds,
+                totalDrawTime: roomConditions[room]?.drawTime,
+                currentRound: roomConditions[room]?.currentRound,
+                currentWordLength:
+                    roomConditions[room]?.correctAns?.length || 0,
+                roomOwner: roomConditions[room].roomOwner,
+                isGameStarted: roomConditions[room].isGameStarted,
+                showWaitingScreen: roomConditions[room].showWaitingScreen,
+                showingResults: roomConditions[room].showingResults,
+            });
+        }, 5000);
+        return true;
+    } else {
+        console.log("Changing the round");
+        roomConditions[room].currentRound =
+            roomConditions[room]?.currentRound + 1;
+        roomConditions[room].currentlyDrawing = 1;
+        roundChanged = true;
+    }
+};
+
 const roomMembers = {};
 
 // {roomId:[{name,id,points,guessedCorrectAns}]}
@@ -42,6 +93,7 @@ const roomConditions = {};
 //                 roomOwner: socket.id,
 //                 isGameStarted: false,
 //                 timerStartTime: null,
+//                 setTimeoutTimer:null
 /*
 {
    wordChosen: false,
@@ -57,6 +109,7 @@ const roomConditions = {};
    isGameStarted:false
    showWaitingScreen:false
    showingResults:false
+   setTimeoutTimer:timer object of setTimeout
 }
 */
 
@@ -89,6 +142,7 @@ io.on("connection", (socket) => {
                 timerStartTime: null,
                 showWaitingScreen: false,
                 showingResults: false,
+                setTimeoutTimer: null,
             };
             // joining the socket to room
             socket.join(room);
@@ -245,6 +299,7 @@ io.on("connection", (socket) => {
             // sending updated room conditions to all users
             io.to(room).emit("update-game-conditions", {
                 wordChosen: true, //This is what i have to change other things are as it is
+                roomOwner: roomConditions[room]?.roomOwner,
                 currentlyDrawing: whoIsDrawing,
                 totalRounds: roomConditions[room].rounds,
                 totalDrawTime: roomConditions[room].drawTime,
@@ -261,8 +316,11 @@ io.on("connection", (socket) => {
             // setting a timer to accept answers
             roomConditions[room].timerStartTime = Date.now();
 
-            // Timer
-            const timer = setTimeout(() => {
+            // clearing if any timeout timer exists
+            if (roomConditions[room].setTimeoutTimer != null)
+                clearTimeout(roomConditions[room].setTimeoutTimer);
+            // setting up timeout
+            roomConditions[room].setTimeoutTimer = setTimeout(() => {
                 if (!roomConditions[room]) {
                     console.log("Room conditions are undefined");
                     return;
@@ -393,7 +451,7 @@ io.on("connection", (socket) => {
                     showingResults: roomConditions[room].showingResults,
                 });
 
-                clearTimeout(timer);
+                clearTimeout(roomConditions[room].setTimeoutTimer);
             }, roomConditions[room].drawTime * 1000);
         } else {
             socket.emit("error", { message: "Unexpected error occured" });
@@ -482,77 +540,155 @@ io.on("connection", (socket) => {
     });
 
     // disconnect
+    // disconnect hone par agar last member ho toh round ko bhi change karna hain
+
     socket.on("disconnect", () => {
         console.log(`Socket ${socket.id} disconnected `);
+
         for (const room in roomMembers) {
+            // member index to be removed
             const memberIndex = roomMembers[room].findIndex(
                 (member) => member.id === socket.id
             );
-            console.log(memberIndex);
+            // currently drawing player before removing any player
+            const myCurrentlyDrawing =
+                roomMembers[room][roomConditions[room]?.currentlyDrawing - 1];
+            // removing the player id it exists
             if (memberIndex !== -1) {
                 const removedMember = roomMembers[room].splice(
                     memberIndex,
                     1
                 )[0];
                 const removedMemberName = removedMember.name;
+                // Notify all users in the room
+                io.to(room).emit("recieve-connected-users", roomMembers[room]);
+                io.to(room).emit("recieve-message", {
+                    name: removedMemberName,
+                    message: `${removedMemberName} left the room`,
+                    category: "left",
+                });
+                //
                 if (roomMembers[room].length === 0) {
                     delete roomMembers[room];
                     delete roomConditions[room];
                 } else {
-                    if (socket.id === roomConditions[room].roomOwner) {
+                    console.log("WHo left", socket.id);
+                    if (
+                        socket.id === myCurrentlyDrawing.id &&
+                        socket.id === roomConditions[room].roomOwner
+                    ) {
+                        console.log("Currently drawer left who was room owner");
                         // Assign new owner
                         roomConditions[room].roomOwner =
                             roomMembers[room][0].id;
+                        // Assignning a new drawer
+                        io.to(room).emit("clear-timeout");
+                        if (roomConditions[room].setTimeoutTimer != null)
+                            clearTimeout(roomConditions[room].setTimeoutTimer);
+                        // Update currently drawing user
+                        const nextDrawingIndex =
+                            roomConditions[room].currentlyDrawing;
+
+                        // updating the rounds or setting game over
+                        if (memberIndex === roomMembers[room].length) {
+                            if (
+                                roundUpdation(
+                                    room,
+                                    roomConditions[room].currentRound
+                                )
+                            )
+                                return;
+                        }
+                        const whoIsDrawing =
+                            roomMembers[room][
+                                roomConditions[room]?.currentlyDrawing - 1
+                            ];
+                        io.to(room).emit("update-game-conditions", {
+                            wordChosen: false,
+                            currentlyDrawing: whoIsDrawing,
+                            totalRounds: roomConditions[room]?.rounds,
+                            totalDrawTime: roomConditions[room]?.drawTime,
+                            currentRound: roomConditions[room]?.currentRound,
+                            currentWordLength:
+                                roomConditions[room]?.correctAns?.length || 0,
+                            roomOwner: roomConditions[room].roomOwner,
+                            isGameStarted: roomConditions[room]?.isGameStarted,
+                            showWaitingScreen: true,
+                            showingResults:
+                                roomConditions[room]?.showingResults,
+                        });
+                    }
+                    // room owner left
+                    else if (socket.id === roomConditions[room].roomOwner) {
+                        console.log("Room owner left");
+
+                        // Assign new owner
+                        const whoIsDrawing =
+                            roomMembers[room][
+                                roomConditions[room]?.currentlyDrawing - 1
+                            ];
+                        roomConditions[room].roomOwner =
+                            roomMembers[room][0].id;
+                        io.to(room).emit("update-game-conditions", {
+                            wordChosen: roomConditions[room]?.wordChosen,
+                            currentlyDrawing: whoIsDrawing,
+                            totalRounds: roomConditions[room]?.rounds,
+                            totalDrawTime: roomConditions[room]?.drawTime,
+                            currentRound: roomConditions[room]?.currentRound,
+                            currentWordLength:
+                                roomConditions[room]?.correctAns?.length || 0,
+                            roomOwner: roomConditions[room].roomOwner,
+                            isGameStarted: roomConditions[room]?.isGameStarted,
+                            showWaitingScreen:
+                                roomConditions[room]?.showWaitingScreen,
+                            showingResults:
+                                roomConditions[room]?.showingResults,
+                        });
                     }
 
                     // If the removed member was the currently drawing user
-                    if (
-                        socket.id ===
-                        roomMembers[room][
-                            roomConditions[room]?.currentlyDrawing - 1
-                        ]?.id
-                    ) {
+                    else if (socket.id === myCurrentlyDrawing.id) {
+                        console.log("Currently drawer left");
+                        // clearing the timeout
+                        io.to(room).emit("clear-timeout");
+                        if (roomConditions[room].setTimeoutTimer != null)
+                            clearTimeout(roomConditions[room].setTimeoutTimer);
                         // Update currently drawing user
                         const nextDrawingIndex =
-                            roomConditions[room].currentlyDrawing %
-                            roomMembers[room].length;
-                        roomConditions[room].currentlyDrawing =
-                            nextDrawingIndex + 1;
+                            roomConditions[room].currentlyDrawing;
+
+                        // updating the rounds or setting game over
+                        if (memberIndex === roomMembers[room].length) {
+                            if (
+                                roundUpdation(
+                                    room,
+                                    roomConditions[room].currentRound
+                                )
+                            )
+                                return;
+                        }
+                        const whoIsDrawing =
+                            roomMembers[room][
+                                roomConditions[room]?.currentlyDrawing - 1
+                            ];
+                        io.to(room).emit("update-game-conditions", {
+                            wordChosen: false,
+                            currentlyDrawing: whoIsDrawing,
+                            totalRounds: roomConditions[room]?.rounds,
+                            totalDrawTime: roomConditions[room]?.drawTime,
+                            currentRound: roomConditions[room]?.currentRound,
+                            currentWordLength:
+                                roomConditions[room]?.correctAns?.length || 0,
+                            roomOwner: roomConditions[room].roomOwner,
+                            isGameStarted: roomConditions[room]?.isGameStarted,
+                            showWaitingScreen: true,
+                            showingResults:
+                                roomConditions[room]?.showingResults,
+                        });
                     }
-
-                    // Notify all users in the room
-                    io.to(room).emit(
-                        "recieve-connected-users",
-                        roomMembers[room]
-                    );
-                    io.to(room).emit("recieve-message", {
-                        name: removedMemberName,
-                        message: `${removedMemberName} left the room`,
-                        category: "left",
-                    });
-
-                    // Update game conditions for all users
-                    const whoIsDrawing =
-                        roomMembers[room][
-                            roomConditions[room]?.currentlyDrawing - 1
-                        ];
-                    io.to(room).emit("update-game-conditions", {
-                        wordChosen: roomConditions[room]?.wordChosen,
-                        currentlyDrawing: whoIsDrawing,
-                        totalRounds: roomConditions[room]?.rounds,
-                        totalDrawTime: roomConditions[room]?.drawTime,
-                        currentRound: roomConditions[room]?.currentRound,
-                        currentWordLength:
-                            roomConditions[room]?.correctAns?.length || 0,
-                        roomOwner: roomConditions[room].roomOwner,
-                        isGameStarted: roomConditions[room]?.isGameStarted,
-                        showWaitingScreen:
-                            roomConditions[room]?.showWaitingScreen,
-                        showingResults: roomConditions[room]?.showingResults,
-                    });
-
                 }
             }
+            break;
         }
     });
 });

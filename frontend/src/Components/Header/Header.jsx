@@ -1,53 +1,71 @@
 import "./Header.css";
 import { useSelector } from "react-redux";
 import SocketContext from "../../context/SocketContext";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Stack } from "@mui/material";
 
 const Header = ({ children }) => {
+    const room = useSelector((state) => state.user.room);
     const currentWordLength = useSelector(
         (state) => state.gameCondition.currentWordLength
     );
-    const [timer, setTimer] = useState(false);
     const timerRef = useRef(null);
+    const intervalRef = useRef(null); // Ref to hold the interval ID
     const socketConnection = useContext(SocketContext);
-    let totalDrawTime = useSelector(
+    const totalDrawTime = useSelector(
         (state) => state.gameCondition.totalDrawTime
     );
     const gameCondition = useSelector((state) => state.gameCondition);
-    // console.log("Total rounds", gameCondition.totalRounds);
+
     useEffect(() => {
-        console.log("Timer Ref", timerRef);
-        if (socketConnection && timerRef.current && totalDrawTime) {
-            socketConnection.on("start-timer", () => {
-                // if (interval) clearInterval(interval);
-                if (timerRef.current != null) {
-                    let currentTime = totalDrawTime;
-                    timerRef.current.innerHTML = currentTime;
-                    const interval = setInterval(() => {
-                        currentTime--;
-                        timerRef.current.innerHTML = currentTime;
-                        if (currentTime <= 0) {
-                            clearInterval(interval);
-                        }
-                    }, 1000);
+        if (socketConnection && timerRef.current) {
+            const startTimer = (time) => {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
                 }
-            });
-            socketConnection.on("start-timer-late", (data) => {
-                if (timerRef.current != null) {
-                    let currentTime = Math.floor(data);
+                let currentTime = time;
+                timerRef.current.innerHTML = currentTime;
+                intervalRef.current = setInterval(() => {
+                    currentTime--;
                     timerRef.current.innerHTML = currentTime;
-                    const interval = setInterval(() => {
-                        currentTime--;
-                        timerRef.current.innerHTML = currentTime;
-                        if (currentTime <= 0) {
-                            clearInterval(interval);
-                        }
-                    }, 1000);
+                    if (currentTime <= 0) {
+                        clearInterval(intervalRef.current);
+                        intervalRef.current = null;
+                    }
+                }, 1000);
+            };
+
+            const handleStartTimer = () => {
+                startTimer(totalDrawTime);
+            };
+
+            const handleStartTimerLate = (data) => {
+                startTimer(Math.floor(data));
+            };
+
+            const handleClearTimeout = () => {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                    intervalRef.current = null;
                 }
-            });
+                timerRef.current.innerHTML = 0;
+            };
+
+            socketConnection.on("start-timer", handleStartTimer);
+            socketConnection.on("start-timer-late", handleStartTimerLate);
+            socketConnection.on("clear-timeout", handleClearTimeout);
+
+            return () => {
+                // socketConnection.off("start-timer", handleStartTimer);
+                // socketConnection.off("start-timer-late", handleStartTimerLate);
+                // socketConnection.off("clear-timeout", handleClearTimeout);
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                }
+            };
         }
-    }, [socketConnection, totalDrawTime, timerRef.current]);
+    }, [socketConnection, totalDrawTime]);
+
     return (
         <div className="header">
             <Stack direction={"row"} alignItems={"center"} gap={2}>
@@ -57,7 +75,7 @@ const Header = ({ children }) => {
                 <span className="display-round">
                     <span className="responsive-round-text">{"Round "} </span>
                     {gameCondition.currentRound} of {gameCondition.totalRounds}
-                </span>{" "}
+                </span>
             </Stack>
 
             {children}
@@ -72,10 +90,7 @@ const Header = ({ children }) => {
                     <sup>{currentWordLength}</sup>
                 </div>
             </div>
-            <div>
-                <button>V</button>
-                <button>V</button>
-            </div>
+            <div>{room}</div>
         </div>
     );
 };
