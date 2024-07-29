@@ -11,6 +11,7 @@ import { useState, useEffect, useContext } from "react";
 import getRandomUsername from "../helpers/getRandomUsername";
 import { setRoomOwner } from "../features/gameConditionSlice";
 import { addRoom, addName, addId } from "../features/userSlice";
+import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 const Hompepage = () => {
     const generateRoomCode = () => {
         return generateUniqueId({
@@ -23,11 +24,11 @@ const Hompepage = () => {
 
     useEffect(() => {
         if (socketService.getConnectionStatus()) {
-            console.log("Socket connected:", socketService.socket);
+            // console.log("Socket connected:", socketService.socket);
         } else {
-            console.log("Socket not connected yet");
+            // console.log("Socket not connected yet");
             const handleConnect = () => {
-                console.log("Socket connected:", socketService.socket);
+                // console.log("Socket connected:", socketService.socket);
             };
 
             socketService.socket?.on("connect", handleConnect);
@@ -49,7 +50,7 @@ const Hompepage = () => {
     };
     const handleCreatePrivateRoom = () => {
         const roomId = generateRoomCode();
-        console.log("RoomId", roomId);
+        // console.log("RoomId", roomId);
         if (!socketService) {
             toast.error("Connection not established");
             return;
@@ -121,7 +122,7 @@ const Hompepage = () => {
                         className="random-name-btn"
                         onClick={handleRandomName}
                     >
-                        R
+                        <GiPerspectiveDiceSixFacesRandom size={24}/>
                     </button>
                 </div>
                 <button

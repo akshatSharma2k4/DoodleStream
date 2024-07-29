@@ -1,78 +1,78 @@
-/* General Styles */
+
 body {
     margin: 0;
     font-family: "Arial", sans-serif;
-    background-color: #121212; /* Dark background for better contrast */
+    background-color: #121212; 
 }
 
-/* WaitingPage Container */
+
 .waiting-page {
     width: 100%;
-    height: 100vh; /* Full viewport height */
+    height: 100vh; 
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #121212; /* Background color to match body */
+    background-color: #121212; 
 }
 
-/* Choosing Word Section */
+
 .choosing-word-container {
     width: 650px;
     height: 450px;
-    background-color: #333333; /* Slightly lighter than the page background */
+    background-color: #333333; 
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Adds depth */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-/* Word Item Styles */
+
 .word-item {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    min-width: 120px; /* Slightly larger for better click area */
+    min-width: 120px; 
     width: auto;
-    height: 60px; /* Increased height for better readability */
+    height: 60px; 
     padding: 10px;
     border-radius: 8px;
-    border: 2px solid #ffffff; /* Slightly softer border */
+    border: 2px solid #ffffff; 
     font-weight: bold;
-    font-size: 1.2rem; /* Larger text for better visibility */
-    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    font-size: 1.2rem; 
+    transition: all 0.3s ease; 
 }
 
-/* Hover Effect */
+
 .word-item:hover {
-    background-color: #ffffff; /* Light background on hover */
-    color: #000000; /* Dark text color for better contrast */
+    background-color: #ffffff; 
+    color: #000000; 
     cursor: pointer;
-    border-color: #ffffff; /* Matches background color */
+    border-color: #ffffff; 
 }
 
-/* Typography for "Choosing a Word" Message */
+
 .typography {
-    font-size: 1.5rem; /* Larger font size for better readability */
-    color: #ffffff; /* White text color for contrast */
-    text-align: center; /* Center align text */
-    margin-bottom: 20px; /* Spacing between elements */
+    font-size: 1.5rem; 
+    color: #ffffff; 
+    text-align: center; 
+    margin-bottom: 20px; 
     padding: 10px;
-    background-color: #2a2a2a; /* Match the background color of ChoosingWord container */
-    border-radius: 8px; /* Rounded corners for message */
+    background-color: #2a2a2a; 
+    border-radius: 8px; 
 }
-/* Background color for OtherChoosingWord */
+
 .other-choosing-word {
     width: 650px;
-    height: 500px; /* Adjusted height to fit the message */
-    background-color: #333333; /* Slightly lighter than the ChoosingWord container */
+    height: 500px; 
+    background-color: #333333; 
     border-radius: 8px;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff; /* White text color for contrast */
+    color: #ffffff; 
 }

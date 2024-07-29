@@ -11,7 +11,7 @@ const OtherChoosingWord = () => {
     return (
         <Stack className="other-choosing-word">
             <Typography sx={{ fontSize: "x-large" }}>
-                {currentlyDrawing.name} is Choosing a Word!
+                {currentlyDrawing?.name} is Choosing a Word!
             </Typography>
         </Stack>
     );

@@ -90,7 +90,7 @@ const Header = ({ children }) => {
                     <sup>{currentWordLength}</sup>
                 </div>
             </div>
-            <div>{room}</div>
+            <div style={{ fontWeight: "bold" }}>Room : {room}</div>
         </div>
     );
 };

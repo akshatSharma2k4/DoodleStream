@@ -1,72 +1,59 @@
-/* General reset for margin, padding, and box-sizing */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Container for chat messages */
 .chat {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 1px; /* Original padding */
+    padding: 1px;
 }
 
-/* Base styles for chat messages */
 .chat-message {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 5px 10px; /* Adjusted padding for size while maintaining readability */
-    border-radius: 4px; /* Slightly rounded corners */
-    margin-bottom: 2px; /* Reduced spacing between messages */
-    font-size: 0.9rem; /* Slightly smaller font size for compactness */
-    font-family: Arial, sans-serif; /* Consistent font for messages */
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
 }
 
-/* Styles for odd and even messages */
 .chat-message:nth-child(odd) {
-    background-color: #f0f0f0; /* Light gray for odd messages */
+    background-color: #f0f0f0;
 }
 
 .chat-message:nth-child(even) {
-    background-color: #e0e0e0; /* Slightly darker gray for even messages */
+    background-color: #e0e0e0;
 }
 
-/* Specific category styles */
 .chat-message.left {
-    background-color: #ffcccc; /* Light pink for left messages */
+    background-color: #ffcccc;
 }
 
 .chat-message.correct-ans {
-    background-color: #ccffcc; /* Light green for correct answers */
+    background-color: #ccffcc;
 }
 
 .chat-message.joined {
-    background-color: rgb(219, 161, 52); /* Amber for joined notifications */
+    background-color: rgb(219, 161, 52);
 }
 
-/* Hover effect to highlight messages */
 .chat-message:hover {
-    background-color: #cce5ff; /* Light blue for hover effect */
-    /* Alternative hover colors:
-       #d1ffd6 (Light mint green)
-       #ffebcc (Light peach)
-       #f7d3d3 (Light rose pink)
-    */
+    background-color: #cce5ff;
 }
 
-/* Styling for message text */
 .chat-message span {
-    font-weight: normal; /* Normal font weight for message text */
+    font-weight: normal;
 }
 
-/* Styling for names with bold text */
 .chat-message span > span {
-    font-weight: bold; /* Bold font for names */
-    max-width: 100%; /* Ensure name doesn't overflow */
-    color: #333; /* Darker color for better readability */
+    font-weight: bold;
+    max-width: 100%;
+    color: #333;
 }

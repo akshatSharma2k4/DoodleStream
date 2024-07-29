@@ -14,12 +14,12 @@ class SocketService {
             this.socket = io(SOCKET_URL);
 
             this.socket.on("connect", () => {
-                console.log("Connected to socket server");
+                // console.log("Connected to socket server");
                 this.isConnected = true;
             });
 
             this.socket.on("disconnect", () => {
-                console.log("Disconnected from socket server");
+                // console.log("Disconnected from socket server");
                 this.isConnected = false;
             });
         }

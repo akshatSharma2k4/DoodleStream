@@ -26,11 +26,12 @@ import {
     setShowWaitingScreen,
     setShowResults,
 } from "../features/gameConditionSlice";
-
+import toast from "react-hot-toast";
 const ScreenLayout = () => {
     // video call data
 
     // game content
+    const navigate = useNavigate();
     const [resultData, setResultData] = useState([]);
     const dispatch = useDispatch();
     const socketConn = useContext(SocketContext);
@@ -46,6 +47,10 @@ const ScreenLayout = () => {
     );
     const [allowChange, setAllowChange] = useState(false);
     useEffect(() => {
+        socketConn.on("error", () => {
+            toast.error("Unexpected error occured");
+            navigate("/");
+        });
         socketConn.on("update-game-conditions", (data) => {
             dispatch(setWordChosen(data.wordChosen));
             dispatch(setCurrentlyDrawing(data.currentlyDrawing));
@@ -77,17 +82,19 @@ const ScreenLayout = () => {
             <Stack
                 direction={"row"}
                 justifyContent={"space-between"}
-                sx={{ border: "2px solid red", width: "95%" }}
+                sx={{ width: "95%" }}
                 gap={0.5}
             >
                 <ConnectedUsers></ConnectedUsers>
                 {showResults && <Results users={resultData}></Results>}
-                {!showResults &&
-                    (isGameStarted ? (
-                        <Gameplay></Gameplay>
-                    ) : (
-                        <CreateGame allowChange={allowChange}></CreateGame>
-                    ))}
+                <div>
+                    {!showResults &&
+                        (isGameStarted ? (
+                            <Gameplay></Gameplay>
+                        ) : (
+                            <CreateGame allowChange={allowChange}></CreateGame>
+                        ))}
+                </div>
                 <Chatbox></Chatbox>
                 <Stack
                     id="video-call-users"

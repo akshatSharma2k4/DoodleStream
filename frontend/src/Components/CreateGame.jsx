@@ -7,12 +7,25 @@ import {
     setIsGameStarted,
     setTotalRounds,
 } from "../features/gameConditionSlice";
+import { useNavigate } from "react-router-dom";
 
 const CreateGame = ({ allowChange }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const roomId = useSelector((state) => state.user.room);
     const name = useSelector((state) => state.user.name);
     const socketConn = useContext(SocketContext);
+    const [userWords, setUserWords] = useState("");
+
+    useEffect(() => {
+        if (roomId === null) {
+            navigate("/");
+        }
+    }, [roomId, navigate]);
+
+    const handleUserWords = (event) => {
+        setUserWords(event.target.value);
+    };
     const [gameRules, setGameRules] = useState({
         Players: 2,
         DrawTime: 20,
@@ -27,10 +40,18 @@ const CreateGame = ({ allowChange }) => {
         });
     };
     const handleOnClick = () => {
+        let wordsArray = userWords.split(",");
+        if (wordsArray.length < 10 || wordsArray.length > 100) {
+            wordsArray = [];
+            if (wordsArray.length != 0)
+                toast.error(
+                    "Custom words not sent as the words do not follow length constraints"
+                );
+        }
         if (socketConn) {
             socketConn.emit("set-game-rules", {
                 room: roomId,
-                userChosenWords: [],
+                userChosenWords: wordsArray,
                 gameRules,
             });
             dispatch(setTotalRounds(gameRules.Rounds));
@@ -123,7 +144,7 @@ const CreateGame = ({ allowChange }) => {
                     <option value="5">5</option>
                 </select>
             </div>
-            <div className="container-item">
+            {/* <div className="container-item">
                 <label htmlFor="Hints">Hints:</label>
                 <select
                     id="Hints"
@@ -138,7 +159,7 @@ const CreateGame = ({ allowChange }) => {
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-            </div>
+            </div> */}
             <div
                 className={`custom-words-contaienr ${
                     !allowChange ? "disabled" : ""
@@ -147,6 +168,8 @@ const CreateGame = ({ allowChange }) => {
             >
                 <span>Enter custom words you want to add in the game</span>
                 <textarea
+                    onChange={handleUserWords}
+                    value={userWords}
                     className="custom-words-input"
                     placeholder="Enter minimum 10 word to maximum 100 words seperated by commas(,)"
                 />

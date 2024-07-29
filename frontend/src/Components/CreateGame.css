@@ -1,105 +1,105 @@
-/* General reset for margin, padding, and box-sizing */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Container for the Create Game page */
+
 .create-game-container {
     padding: 20px;
     color: #fff;
     font-size: 1rem;
     width: 100%;
-    max-width: 600px; /* Maintaining previous width */
-    height: auto; /* Adjusted height to fit content */
-    margin: auto; /* Center horizontally */
-    background-color: #333; /* Dark background for contrast */
-    border-radius: 8px; /* Rounded corners for a modern look */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    max-width: 600px; 
+    height: auto; 
+    margin: auto; 
+    background-color: #333; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Reduced gap between elements */
+    gap: 10px; 
 }
 
-/* Disabled state styling */
+
 .disabled {
-    opacity: 0.9; /* Reduced opacity to indicate disabled state */
-    pointer-events: none; /* Prevent interaction */
+    opacity: 0.9; 
+    pointer-events: none; 
 }
 
-/* Styles for container items */
+
 .container-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 50px; /* Maintaining previous height */
+    height: 50px; 
     width: 100%;
 }
 
-/* Styles for selectors */
+
 .selector {
-    width: 40%; /* Maintaining previous width */
-    height: 100%; /* Maintaining previous height */
-    padding: 8px; /* Added padding for better interaction */
+    width: 40%; 
+    height: 100%; 
+    padding: 8px; 
     border-radius: 4px;
-    border: 1px solid #555; /* Subtle border for inputs */
-    background-color: #444; /* Dark background for inputs */
-    color: #ddd; /* Light text color for readability */
-    font-size: 1rem; /* Consistent font size */
+    border: 1px solid #555; 
+    background-color: #444; 
+    color: #ddd; 
+    font-size: 1rem; 
     transition: background-color 0.3s ease;
 }
 
-/* Focus style for selectors */
+
 .selector:focus {
-    border-color: #66b2ff; /* Highlight border on focus */
-    background-color: #555; /* Darker background on focus */
+    border-color: #66b2ff; 
+    background-color: #555; 
     outline: none;
 }
 
-/* Container for custom words input */
+
 .custom-words-contaienr {
-    margin-top: 20px; /* Reduced margin for better spacing */
+    margin-top: 20px; 
     width: 100%;
-    height: auto; /* Adjusted height to fit content */
+    height: auto; 
 }
 
-/* Styles for custom words input */
+
 .custom-words-input {
-    resize: vertical; /* Allow vertical resizing only */
+    resize: vertical; 
     padding: 10px;
-    border: 1px solid #555; /* Subtle border for input area */
-    border-radius: 4px; /* Rounded corners for input area */
+    border: 1px solid #555; 
+    border-radius: 4px; 
     width: 100%;
-    height: 120px; /* Fixed height for consistency */
-    background-color: #444; /* Dark background for input area */
-    color: #ddd; /* Light text color for readability */
-    font-size: 1rem; /* Consistent font size */
+    height: 120px; 
+    background-color: #444; 
+    color: #ddd; 
+    font-size: 1rem; 
     transition: border-color 0.3s ease;
 }
 
-/* Focus style for custom words input */
+
 .custom-words-input:focus {
-    border-color: #66b2ff; /* Highlight border on focus */
+    border-color: #66b2ff; 
     outline: none;
 }
 
-/* Styles for the Create Game button */
+
 .room-join-btn {
     border-radius: 4px;
     width: 100%;
-    height: 50px; /* Maintaining previous height */
-    font-size: 1.1rem; /* Adjusted font size for better readability */
+    height: 50px; 
+    font-size: 1.1rem; 
     color: #fff;
-    background-color: #28a745; /* Green color for the button */
+    background-color: #28a745; 
     border: none;
     outline: none;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Hover effect for the button */
+
 .room-join-btn:hover {
-    background-color: #218838; /* Darker green for hover */
-    transform: scale(1.03); /* Slightly enlarge button on hover */
+    background-color: #218838; 
+    transform: scale(1.03); 
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ColorPallete.css";
 import SocketContext from "../../context/SocketContext";
 import { useContext } from "react";
+import { MdDeleteForever } from "react-icons/md";
 
 const ColorPallete = ({ brushState, setBrushState, room, canvasCtx }) => {
     const brushSizes = [2, 4, 8, 12, 16];
@@ -55,7 +56,7 @@ const ColorPallete = ({ brushState, setBrushState, room, canvasCtx }) => {
             canvasCtx.canvas.width || 1024,
             canvasCtx.canvas.height || 1024
         );
-        console.log("Canvas ctx from color pallete", canvasCtx);
+        // console.log("Canvas ctx from color pallete", canvasCtx);
     };
 
     return (
@@ -244,7 +245,15 @@ const ColorPallete = ({ brushState, setBrushState, room, canvasCtx }) => {
                 ></div>
             </div>
             <div className="delete-drawing-box">
-                <button onClick={handleDeleteDrawing}>Delete</button>
+                <button
+                    onClick={handleDeleteDrawing}
+                    className="delete-drawing-btn"
+                    style={{
+                        
+                    }}
+                >
+                    <MdDeleteForever size={32} />
+                </button>
             </div>
         </div>
     );

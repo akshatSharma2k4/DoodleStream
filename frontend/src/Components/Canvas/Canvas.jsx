@@ -82,9 +82,9 @@ const Canvas = () => {
         };
     };
     const handleOnClick = (event) => {
-        console.log("CanvasCtx", canvasCtx);
+        // console.log("CanvasCtx", canvasCtx);
         if (isMyTurn && canvasCtx) {
-            console.log("Clicked for drawing");
+            // console.log("Clicked for drawing");
             const { clientX, clientY } = getRelativeCoords(event);
             canvasCtx.beginPath();
             canvasCtx.moveTo(clientX, clientY);
@@ -98,7 +98,7 @@ const Canvas = () => {
     };
     const handleMouseMove = (event) => {
         if (drawing && isMyTurn && canvasCtx) {
-            console.log("Drawing");
+            // console.log("Drawing");
             const { clientX, clientY } = getRelativeCoords(event);
             canvasCtx.lineTo(clientX, clientY);
             canvasCtx.stroke();
@@ -111,7 +111,7 @@ const Canvas = () => {
     };
     const handleMouseUp = () => {
         if (isMyTurn && canvasCtx) {
-            console.log("Mouse up");
+            // console.log("Mouse up");
             canvasCtx.closePath();
             socketConnection.emit("mouse-up", {
                 room: roomId,

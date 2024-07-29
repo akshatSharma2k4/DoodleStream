@@ -8,7 +8,7 @@ const ConnectedUsers = () => {
     const room = useSelector((state) => state.user.room);
     const [users, setUsers] = useState([]);
     const socketConnection = useContext(SocketContext);
-    console.log("ConnectedUsers:Socket", socketConnection);
+    // console.log("ConnectedUsers:Socket", socketConnection);
     useEffect(() => {
         if (socketConnection) {
             socketConnection.emit("get-connected-users", room);
