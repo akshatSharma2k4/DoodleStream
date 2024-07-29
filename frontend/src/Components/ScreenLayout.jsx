@@ -12,6 +12,8 @@ import Gameplay from "./Gameplay/Gameplay";
 import Header from "./Header/Header";
 import Results from "./Results/Results";
 import VideoCall from "./VideoCall";
+const appID = import.meta.env.VITE_AGORA_APP_ID;
+
 
 import {
     resetGameConditions,
@@ -104,7 +106,7 @@ const ScreenLayout = () => {
                     }}
                 >
                     <VideoCall
-                        appId={"0f81aa4f413b4daa829eaa46323cfea4"}
+                        appId={appID}
                         channel={room}
                         token={""}
                     ></VideoCall>

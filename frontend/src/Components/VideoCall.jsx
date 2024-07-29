@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     LocalUser,
     RemoteUser,
@@ -12,6 +12,30 @@ import {
 import "./style.css";
 import { Stack } from "@mui/material";
 
+// Suppress console logs
+const originalConsole = {
+    log: console.log,
+    info: console.info,
+    warn: console.warn,
+    error: console.error,
+    debug: console.debug,
+};
+
+const suppressConsoleLogs = () => {
+    console.log = function () {};
+    console.info = function () {};
+    console.warn = function () {};
+    console.error = function () {};
+    console.debug = function () {};
+};
+
+const restoreConsoleLogs = () => {
+    // console.log = originalConsole.log;
+    // console.info = originalConsole.info;
+    // console.warn = originalConsole.warn;
+    // console.error = originalConsole.error;
+};
+
 export const Basics = ({ appId, channel, token }) => {
     const [calling, setCalling] = useState(true);
     const [micOn, setMic] = useState(true);
@@ -19,6 +43,14 @@ export const Basics = ({ appId, channel, token }) => {
 
     // State for remote users controls
     const [remoteUsersStatus, setRemoteUsersStatus] = useState({});
+
+    useEffect(() => {
+        suppressConsoleLogs(); // Suppress logs when the component mounts
+
+        return () => {
+            restoreConsoleLogs(); // Restore logs when the component unmounts
+        };
+    }, []);
 
     const isConnected = useIsConnected();
     useJoin(
@@ -153,7 +185,7 @@ export const Basics = ({ appId, channel, token }) => {
                                 user={user}
                             >
                                 <samp className="user-name">{user.uid}</samp>
-                                <div className="controls">
+                                {/* <div className="controls">
                                     <button
                                         onClick={() =>
                                             handleUserAction(user.uid, "mute")
@@ -172,7 +204,7 @@ export const Basics = ({ appId, channel, token }) => {
                                             ? "Disable Video"
                                             : "Enable Video"}
                                     </button>
-                                </div>
+                                </div> */}
                             </RemoteUser>
                         </Stack>
                     ))}

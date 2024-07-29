@@ -1,7 +1,9 @@
 // src/socketService.js
 import { io } from "socket.io-client";
+// Access environment variables
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const SOCKET_URL = "http://localhost:4000";
+const SOCKET_URL = backendUrl;
 
 class SocketService {
     constructor() {
