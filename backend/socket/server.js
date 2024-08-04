@@ -5,17 +5,24 @@ const http = require("http");
 const cors = require("cors");
 const getWords = require("../helper/getWords.js");
 const dotenv = require("dotenv").config();
+const path = require("path");
+
 app.use(
     cors({
-        origin: process.env.FRONTEND_URL,
+        origin: "*",
     })
 );
+
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: process.env.FRONTEND_URL,
+        origin: "*",
     },
 });
+
+const _dirname = path.dirname("");
+const buildPath = path.join(_dirname, "../frontend/dist");
+app.use(express.static(buildPath));
 
 const DRAWER_BASE_POINTS = 10;
 const POINTS_PER_CORRECT_GUESS = 10;
@@ -42,7 +49,6 @@ const calcuatePointsForGuess = (guessTime, totalGuessesBefore) => {
     ); // Ensure points do not go below 0
     return finalPoints;
 };
-
 
 const roundUpdation = (room, currentRoundValue) => {
     if (currentRoundValue == roomConditions[room]?.rounds) {
