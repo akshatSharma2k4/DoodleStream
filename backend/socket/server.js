@@ -23,6 +23,9 @@ const io = new Server(server, {
 const _dirname = path.dirname("");
 const buildPath = path.join(_dirname, "../frontend/dist");
 app.use(express.static(buildPath));
+app.get("*", (req, resp) => {
+    resp.redirect("/");
+});
 
 const DRAWER_BASE_POINTS = 10;
 const POINTS_PER_CORRECT_GUESS = 10;
