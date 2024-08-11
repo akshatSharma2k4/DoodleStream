@@ -1,0 +1,20 @@
+{
+    "name": "doodle-stream",
+    "version": "1.0.0",
+    "description": "",
+    "main": "/backend/server.js",
+    "scripts": {
+        "start": "nodemon ./backend/server.js",
+        "build": "cd backend && npm install && node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/akshatSharma2k4/Scribble-Clone-with-Video-Call.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/akshatSharma2k4/Scribble-Clone-with-Video-Call/issues"
+    },
+    "homepage": "https://github.com/akshatSharma2k4/Scribble-Clone-with-Video-Call#readme"
+}
