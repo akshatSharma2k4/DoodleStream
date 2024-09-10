@@ -672,7 +672,7 @@ io.on("connection", (socket) => {
     socket.on("message", ({ data, room, name }) => {
         if (roomConditions[room].wordChosen) {
             //  correct ans sent
-            if (data == roomConditions[room]?.correctAns) {
+            if (data.toLowerCase() == roomConditions[room]?.correctAns) {
                 const index = roomMembers[room].findIndex((member) => {
                     return member.id == socket.id;
                 });
@@ -796,6 +796,7 @@ io.on("connection", (socket) => {
                 )[0];
                 const removedMemberName = removedMember.name;
                 // Notify all users in the room
+                // console.log("Someone left the room");
                 io.to(room).emit("recieve-connected-users", roomMembers[room]);
                 io.to(room).emit("recieve-message", {
                     name: removedMemberName,
